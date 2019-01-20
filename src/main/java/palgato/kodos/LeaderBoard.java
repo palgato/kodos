@@ -1,9 +1,7 @@
 package palgato.kodos;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class LeaderBoard
 {
@@ -23,41 +21,36 @@ public class LeaderBoard
         return boardPlayers;
     }
 
-    public static void main(String[] args) {
-        //Create a new LeaderBoard with a specific file name and load any players in it to memory
-        //LeaderBoard unoBoard = new LeaderBoard("unoBoard.csv");
-
-        //Display the LeaderBoard, i.e. Players and their information
-        //displayBoard(unoBoard);
-    }
-
     /* Displays a sorted LeaderBoard of active Players in descending Wins value */
-    public static List<Player> displayBoard(LeaderBoard leaderBoard) {
+    public static Map<String, Player> displayBoard(LeaderBoard leaderBoard) {
         //Add LeaderBoard Players to a List and sort them in descending order of Wins
-        List<Player> sortedActiveBoardplayers = new ArrayList<>();
-        for (int i = 0; i < leaderBoard.getBoardPlayers().size(); i++) {
-            Player p = leaderBoard.getBoardPlayers().get(i);
-            if (p.getActive()) {
-                sortedActiveBoardplayers.add(p);
+
+        Map<String, Player> activeBoardPlayers = new HashMap<>(leaderBoard.getBoardPlayers());
+        Iterator<Entry<String, Player>> it = activeBoardPlayers.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, Player> entry = it.next();
+            if (!entry.getValue().getActive()) {
+                it.remove();
             }
         }
-        Collections.sort(sortedActiveBoardplayers);
+        List<Entry<String, Player>> unsortedBoardPlayers = new ArrayList<>(activeBoardPlayers.entrySet());
 
-        return sortedActiveBoardplayers;
-    }
-
-    /* Returns the Name of a Player in a Map of Players where their name is the key */
-    public static String getKey(Map<String, Player> map, Player player) {
-        for (Map.Entry entry : map.entrySet()) {
-            if (entry.getValue().equals(player)) {
-                return (String) entry.getKey();
+        Collections.sort(unsortedBoardPlayers, new Comparator<Entry<String, Player>>() {
+            @Override
+            public int compare(Entry<String, Player> o1, Entry<String, Player> o2) {
+                return o1.getValue().compareTo(o2.getValue());
             }
+        });
+        Map<String, Player> sortedBoardPlayers = new LinkedHashMap<>();
+        for(Entry<String, Player> entry : unsortedBoardPlayers) {
+            sortedBoardPlayers.put(entry.getKey(),entry.getValue());
         }
-        return null;
+
+        return sortedBoardPlayers;
     }
 
     /* Add a Player - Loads a LeaderBoard and adds a new Player to it */
-    public void addPlayer(String newPlayerName) {
+    public Player addPlayer(String newPlayerName) {
         //Check if Player to add exists and create them
         if (!boardPlayers.containsKey(newPlayerName)) {
             //Create a new Player with 0 wins and set as active
@@ -66,14 +59,15 @@ public class LeaderBoard
             //Add the player to the LeaderBoard HashMap and write to the CSV file
             boardPlayers.put(newPlayerName,newPlayer);
             FileHandler.writeToFile(this);
+            return newPlayer;
         } else {
-            //If the Player already exists, print out message saying so
-            System.out.println("ERROR: Player " + newPlayerName + " already exists for this Leaderboard");
+            //If the Player already exists, return null
+            return null;
         }
     }
 
     /* Update a Player status - takes a Player and updates their status in the LeaderBoard */
-    public void updatePlayerStatus(String updateName, boolean newStatus) {
+    public Player updatePlayerStatus(String updateName, boolean newStatus) {
         //Check if Player to update exists, update their status and write to the CSV file
         if (boardPlayers.containsKey(updateName)) {
             Player updatedPlayer = boardPlayers.get(updateName);
@@ -81,14 +75,15 @@ public class LeaderBoard
             boardPlayers.replace(updateName, updatedPlayer);
 
             FileHandler.writeToFile(this);
+            return updatedPlayer;
         } else {
-            //If the Player doesn't exist, print out message saying so
-            System.out.println("ERROR: The Player " + updateName + " does not exist");
+            //If the Player doesn't exist, return null
+            return null;
         }
     }
 
     /* Add a win to a Player - takes a name and creates a player in the LeaderBoard */
-    public void playerWin(String winnerName) {
+    public Player playerWin(String winnerName) {
         //Check if winning Player exists, add their win and write to the CSV file
         if (boardPlayers.containsKey(winnerName)) {
             Player winner = boardPlayers.get(winnerName);
@@ -96,9 +91,11 @@ public class LeaderBoard
             boardPlayers.replace(winnerName, winner);
 
             FileHandler.writeToFile(this);
+            return winner;
         } else {
             //If the Player doesn't exist, print out message saying so
-            System.out.println("ERROR: Player " + winnerName + " does not exist");
+            return null;
+            //System.out.println("ERROR: Player " + winnerName + " does not exist");
         }
     }
 
