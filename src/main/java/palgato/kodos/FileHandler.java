@@ -40,11 +40,8 @@ public class FileHandler {
 
         String line;
         Map<String, Player> loadedPlayers = new HashMap<>();
-        //File file = new File(filePath);
 
         try {
-            //file.createNewFile();
-            //FileReader fr = new FileReader(filePath);
             BufferedReader br = new BufferedReader(new InputStreamReader(inputStream, Charset.defaultCharset()));
 
             while ((line = br.readLine()) != null) {
