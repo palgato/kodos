@@ -39,7 +39,7 @@ public class Player implements Comparable<Player> {
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
         return wins == player.wins &&
-                active == player.active;
+                active == player.active && name == player.name;
     }
 
     @Override

@@ -36,30 +36,7 @@ public class LeaderBoard
             }
         }
 
-        /*Map<String, Player> activeBoardPlayers = new HashMap<>(leaderBoard.getBoardPlayers());
-        Iterator<Entry<String, Player>> it = activeBoardPlayers.
-                //entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, Player> entry = it.next();
-            if (!entry.getValue().getActive()) {
-                it.remove();
-            }
-        }*/
-
-        //List<Entry<String, Player>> unsortedBoardPlayers = new ArrayList<>(activeBoardPlayers.entrySet());
-
         Collections.sort(activeBoardPlayers);
-
-        /*Collections.sort(unsortedBoardPlayers, new Comparator<Entry<String, Player>>() {
-            @Override
-            public int compare(Entry<String, Player> o1, Entry<String, Player> o2) {
-                return o1.getValue().compareTo(o2.getValue());
-            }
-        });
-        Map<String, Player> sortedBoardPlayers = new LinkedHashMap<>();
-        for(Entry<String, Player> entry : unsortedBoardPlayers) {
-            sortedBoardPlayers.put(entry.getKey(),entry.getValue());
-        }*/
 
         return activeBoardPlayers;
     }
@@ -72,14 +49,6 @@ public class LeaderBoard
             boardPlayers.add(newPlayer);
             FileHandler.writeToFile(this);
             return newPlayer;
-        /*if (!boardPlayers.contains(newPlayerName)) {
-            //Create a new Player with 0 wins and set as active
-            Player newPlayer = new Player(newPlayerName,0, true);
-
-            //Add the player to the LeaderBoard HashMap and write to the CSV file
-            boardPlayers.add(newPlayer);
-            FileHandler.writeToFile(this);
-            return newPlayer;*/
         } else {
             //If the Player already exists, return null
             return null;
@@ -96,19 +65,6 @@ public class LeaderBoard
         boardPlayers.set(playerIndex,updatedPlayer);
         FileHandler.writeToFile(this);
         return updatedPlayer;
-/*
-        if (boardPlayers.contains(updatedPlayer)) {
-            Player updatedPlayer = boardPlayers.indexOf()
-            updatedPlayer.updateStatus(newStatus);
-            boardPlayers.replace(updateName, updatedPlayer);
-
-            FileHandler.writeToFile(this);
-            return updatedPlayer;
-        } else {
-            //If the Player doesn't exist, return null
-            return null;
-        }
-*/
     }
 
     /* Add a win to a Player - takes a name and creates a player in the LeaderBoard */
@@ -121,32 +77,8 @@ public class LeaderBoard
         boardPlayers.set(playerIndex,winner);
         FileHandler.writeToFile(this);
         return winner;
-        /*if (boardPlayers.containsKey(winnerName)) {
-            Player winner = boardPlayers.get(winnerName);
-            winner.addWin();
-            boardPlayers.replace(winnerName, winner);
 
-            FileHandler.writeToFile(this);
-            return winner;
-        } else {
-            //If the Player doesn't exist, print out message saying so
-            return null;
-            //System.out.println("ERROR: Player " + winnerName + " does not exist");
-        }*/
     }
-
-    /* Show a Player - display a single Player and their relevant information */
-/*    public Player showPlayer(String playerName) {
-        //Check if winning Player exists and return the Player
-        //If the Player doesn't exist, print out message saying so
-        if (boardPlayers.containsKey(playerName)) {
-            Player showPlayer = boardPlayers.get(playerName);
-            return showPlayer;
-        } else {
-            System.out.println("Player: " + playerName + " does not exist");
-            return null;
-        }
-    }*/
 
     public Player findPlayer(String playerName) {
 
