@@ -4,14 +4,19 @@ import java.util.Objects;
 
 public class Player implements Comparable<Player> {
 
+    private String name;
     private int wins;
     private boolean active;
 
-    public Player(int numberOfWins, boolean isActive) {
+    public Player(String playerName, int numberOfWins, boolean isActive) {
+        name = playerName;
         wins = numberOfWins;
         active = isActive;
     }
 
+    public String getName() {
+        return name;
+    }
     public int getWins() {
         return wins;
     }
@@ -34,7 +39,7 @@ public class Player implements Comparable<Player> {
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
         return wins == player.wins &&
-                active == player.active;
+                active == player.active && name == player.name;
     }
 
     @Override
