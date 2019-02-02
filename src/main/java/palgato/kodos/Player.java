@@ -44,7 +44,7 @@ public class Player implements Comparable<Player> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(wins, active);
+        return Objects.hash(name, wins, active);
     }
 
     @Override
