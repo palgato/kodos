@@ -6,13 +6,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 public class LeaderBoardController {
 
-    LeaderBoard unoBoard = new LeaderBoard("unoBoard.csv");
+    LeaderBoard unoBoard = new LeaderBoard("unoBoard",new BoardRound("339"));
 
     @GetMapping(value = "/displayBoard")
     @ResponseBody
@@ -39,4 +37,6 @@ public class LeaderBoardController {
     public Player updatePlayer(@PathVariable String name, @PathVariable boolean status) {
         return unoBoard.updatePlayerStatus(name,status);
     }
+
+
 }

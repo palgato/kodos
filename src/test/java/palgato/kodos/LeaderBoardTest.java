@@ -12,7 +12,8 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class LeaderBoardTest {
-    private LeaderBoard testBoard = new LeaderBoard("testBoard.csv");
+    private BoardRound testBoardRound = new BoardRound(1);
+    private LeaderBoard testBoard = new LeaderBoard("testBoard",testBoardRound);
     private Player dennis = new Player("Dennis",4,true);
     private Player mac = new Player("Mac",0,false);
     private Player dee = new Player("Dee",7,true);
@@ -24,18 +25,18 @@ public class LeaderBoardTest {
     @AfterClass
     public static void tearDown() throws Exception {
         String testData = "Dennis,4,true" + "\n" + "Mac,0,false" + "\n" + "Dee,7,true" + "\n";
-        File testFile = new File("testBoard.csv");
+        File testFile = new File("testBoard-1.csv");
         FileWriter fw = new FileWriter(testFile,false);
         fw.write(testData);
         fw.flush();
         fw.close();
 
-        s3client.putObject(s3Bucket,"testBoard.csv",testFile);
+        s3client.putObject(s3Bucket,"testBoard-testRound.csv",testFile);
     }
 
     @Test
     public void getFilePath() {
-        assertEquals("testBoard.csv",testBoard.getFilePath());
+        assertEquals("testBoard-testRound.csv",testBoard.getFilePath());
     }
 
     @Test
@@ -89,5 +90,10 @@ public class LeaderBoardTest {
         Player foundPlayer = testBoard.findPlayer("Dee");
 
         assertEquals(dee.getName(),foundPlayer.getName());
+    }
+
+    @Test
+    public void closeRound() {
+
     }
 }

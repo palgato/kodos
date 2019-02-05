@@ -6,10 +6,15 @@ import java.util.Collections;
 public class LeaderBoard
 {
     private String filePath;
+    private String leaderBoardName;
+    private BoardRound boardRound;
     private ArrayList<Player> boardPlayers;
 
-    public LeaderBoard(String leaderBoardFilePath) {
-        filePath = leaderBoardFilePath;
+    public LeaderBoard(String boardName, BoardRound round) {
+
+        this.leaderBoardName = boardName;
+        this.boardRound = round;
+        filePath = leaderBoardName + "-" + boardRound.getRoundName() + ".csv";
         boardPlayers = FileHandler.readFromFile(filePath);
     }
 
@@ -85,5 +90,10 @@ public class LeaderBoard
                 .filter(foundPlayer1 -> playerName.equals(foundPlayer1.getName()))
                 .findAny()
                 .orElse(null);
+    }
+
+    public void closeRound() {
+        boardRound.updateRound();
+
     }
 }
