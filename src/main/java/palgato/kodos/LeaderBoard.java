@@ -95,6 +95,7 @@ public class LeaderBoard
         ArrayList<Player> finalPlayers = new ArrayList<>(this.getBoardPlayers());
         FileHandler.writeToFile(this);
         boardPlayers.clear();
+        this.filePath = boardName + ".csv";
         FileHandler.writeToFile(this);
         return finalPlayers;
     }
