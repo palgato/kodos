@@ -12,8 +12,7 @@ import java.util.ArrayList;
 import static org.junit.Assert.*;
 
 public class LeaderBoardTest {
-    private BoardRound testBoardRound = new BoardRound(1);
-    private LeaderBoard testBoard = new LeaderBoard("testBoard",testBoardRound);
+    private LeaderBoard testBoard = new LeaderBoard("testBoard");
     private Player dennis = new Player("Dennis",4,true);
     private Player mac = new Player("Mac",0,false);
     private Player dee = new Player("Dee",7,true);

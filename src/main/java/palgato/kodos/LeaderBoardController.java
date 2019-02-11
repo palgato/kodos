@@ -10,7 +10,7 @@ import java.util.ArrayList;
 @RestController
 public class LeaderBoardController {
 
-    LeaderBoard unoBoard = new LeaderBoard("unoBoard",new BoardRound("339"));
+    LeaderBoard unoBoard = new LeaderBoard("unoBoard");
 
     @GetMapping(value = "/displayBoard")
     @ResponseBody
@@ -38,5 +38,10 @@ public class LeaderBoardController {
         return unoBoard.updatePlayerStatus(name,status);
     }
 
+    @GetMapping("/closeBoard/{roundName}")
+    @ResponseBody
+    public ArrayList<Player> closeRound(@PathVariable String roundName) {
+        return unoBoard.closeRound(roundName);
+    }
 
 }

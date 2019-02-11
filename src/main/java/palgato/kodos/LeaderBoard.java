@@ -5,16 +5,14 @@ import java.util.Collections;
 
 public class LeaderBoard
 {
+    private String boardName;
     private String filePath;
-    private String leaderBoardName;
-    private BoardRound boardRound;
     private ArrayList<Player> boardPlayers;
 
-    public LeaderBoard(String boardName, BoardRound round) {
+    public LeaderBoard(String leaderBoardName) {
 
-        this.leaderBoardName = boardName;
-        this.boardRound = round;
-        filePath = leaderBoardName + "-" + boardRound.getRoundName() + ".csv";
+        this.boardName = leaderBoardName;
+        this.filePath = leaderBoardName + ".csv";
         boardPlayers = FileHandler.readFromFile(filePath);
     }
 
@@ -92,8 +90,9 @@ public class LeaderBoard
                 .orElse(null);
     }
 
-    public void closeRound() {
-        boardRound.updateRound();
-
+    public ArrayList<Player> closeRound(String roundName) {
+        this.filePath = boardName + roundName + ".csv";
+        FileHandler.writeToFile(this);
+        return displayBoard(this);
     }
 }
