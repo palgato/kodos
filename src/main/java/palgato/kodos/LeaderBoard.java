@@ -91,8 +91,11 @@ public class LeaderBoard
     }
 
     public ArrayList<Player> closeRound(String roundName) {
-        this.filePath = boardName + roundName + ".csv";
+        this.filePath = boardName + "-" + roundName + ".csv";
+        ArrayList<Player> finalPlayers = new ArrayList<>(this.getBoardPlayers());
         FileHandler.writeToFile(this);
-        return displayBoard(this);
+        boardPlayers.clear();
+        FileHandler.writeToFile(this);
+        return finalPlayers;
     }
 }
