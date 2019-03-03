@@ -7,12 +7,13 @@ import java.util.Collections;
 
 public class LeaderBoard
 {
-    private String boardName;
-    private ArrayList<Player> boardPlayers;
+    private final String boardName;
+    private final ArrayList<Player> boardPlayers;
 
     public LeaderBoard(String leaderBoardName) {
 
         this.boardName = leaderBoardName;
+        this.boardPlayers = new ArrayList<>();
     }
 
     public ArrayList<Player> getBoardPlayers() {
@@ -86,5 +87,9 @@ public class LeaderBoard
         ArrayList<Player> finalPlayers = new ArrayList<>(this.getBoardPlayers());
         boardPlayers.clear();
         return finalPlayers;
+    }
+
+    public String getName() {
+        return this.boardName;
     }
 }
