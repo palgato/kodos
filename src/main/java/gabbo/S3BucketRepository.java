@@ -41,7 +41,7 @@ public class S3BucketRepository implements BoardRepository {
 
         String s3Bucket = System.getenv("TEST_S3_BUCKET_NAME");
         AmazonS3 s3client = accessBucket();
-        s3client.putObject(s3Bucket,this.repoName,newFile,);
+        s3client.putObject(s3Bucket,this.repoName,newFile);
         return boards;
     }
 
